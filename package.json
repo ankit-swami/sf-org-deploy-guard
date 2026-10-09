@@ -1,0 +1,99 @@
+{
+	"name": "sf-org-deploy-guard",
+	"displayName": "SF Org Deploy Guard",
+	"description": "Warns before deploying Salesforce source when the target org is on your blocked list, then delegates to the Salesforce Extension Pack.",
+	"version": "0.2.2",
+	"publisher": "ankit-swami",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ankit-swami/sf-org-deploy-guard.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ankit-swami/sf-org-deploy-guard/issues"
+	},
+	"homepage": "https://github.com/ankit-swami/sf-org-deploy-guard",
+	"engines": {
+		"vscode": "^1.90.0"
+	},
+	"icon": "logo-medium.ico",
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"salesforce",
+		"sfdx",
+		"deploy",
+		"guard",
+		"org"
+	],
+	"activationEvents": [
+		"workspaceContains:sfdx-project.json"
+	],
+	"main": "./out/extension.js",
+	"extensionDependencies": [
+		"salesforce.salesforcedx-vscode"
+	],
+	"contributes": {
+		"commands": [
+			{
+				"command": "sfOrgDeployGuard.deploySourcePath",
+				"title": "SFDX: Deploy This Source (Guarded) to Org",
+				"icon": "$(shield)"
+			},
+			{
+				"command": "sfOrgDeployGuard.deployActiveEditor",
+				"title": "SFDX: Deploy This Source (Guarded) to Org",
+				"icon": "$(shield)"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "sfOrgDeployGuard.deploySourcePath",
+					"when": "sf:has_target_org && sf:project_opened && resourceLangId != 'forcesourcemanifest' && (!sf:protectedOrg || !(resource =~ /\\.(cls|cls-meta\\.xml|trigger|trigger-meta\\.xml)$/))"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "sfOrgDeployGuard.deploySourcePath",
+					"when": "!editorReadonly && isFileSystemResource && sf:has_target_org && resourceLangId != 'forcesourcemanifest' && sf:in_package_directories && (!sf:protectedOrg || !(resource =~ /\\.(cls|cls-meta\\.xml|trigger|trigger-meta\\.xml)$/))"
+				}
+			],
+			"commandPalette": [
+				{
+					"command": "sfOrgDeployGuard.deployActiveEditor",
+					"when": "sf:project_opened && sf:has_target_org"
+				},
+				{
+					"command": "sfOrgDeployGuard.deploySourcePath",
+					"when": "false"
+				}
+			]
+		},
+		"configuration": {
+			"title": "SF Org Deploy Guard",
+			"properties": {
+				"sfOrgDeployGuard.blockedOrgs": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"description": "Org aliases or usernames that trigger a warning before deploy. Matching is case-insensitive. Empty means never warn."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"lint": "eslint src --ext ts"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.0",
+		"@types/vscode": "^1.90.0",
+		"typescript": "^5.7.2"
+	}
+}
