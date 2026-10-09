@@ -2,7 +2,7 @@
 	"name": "sf-org-deploy-guard",
 	"displayName": "SF Org Deploy Guard",
 	"description": "Warns before deploying Salesforce source when the target org is on your blocked list, then delegates to the Salesforce Extension Pack.",
-	"version": "0.2.2",
+	"version": "1.0.0",
 	"publisher": "ankit-swami",
 	"license": "MIT",
 	"repository": {
