@@ -1,0 +1,24 @@
+# The name displayed in the GitHub Actions tab
+name: GitHub Actions Test
+
+# 1. The Trigger: Run this workflow every time someone pushes to the 'main' branch
+on:
+  push:
+    branches:
+      - '*'
+
+# 2. What to do
+jobs:
+  say-hello-job:
+    # 3. The Runner: Use the latest Ubuntu virtual machine
+    runs-on: ubuntu-latest
+
+    # 4. The Steps: The actual actions to execute
+    steps:
+      # Step A: Check out your repository code onto the runner
+      - name: Check out repository code
+        uses: ankit-swami/sf-org-deploy-guard
+
+      # Step B: Run a simple shell command
+      - name: Run a one-line script
+        run: echo "Hello, world! Your first GitHub Action is working."
