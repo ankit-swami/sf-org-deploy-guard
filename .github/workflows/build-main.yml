@@ -6,7 +6,7 @@ on: [workflow_call]
 # What to do
 jobs:
   # Job: Build the package
-  build-package:
+  build:
     runs-on: ubuntu-latest
 
     steps:
