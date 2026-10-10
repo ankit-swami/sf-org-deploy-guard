@@ -1,0 +1,41 @@
+# The name displayed in the GitHub Actions tab
+name: Compile, Build and Publish Package
+
+# The Trigger: Run this workflow every time someone pushes to the any branch
+on:
+  push:
+    branches-ignore: ['main']
+
+# What to do
+jobs: 
+  # Job: Compile the package
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile the package
+        run: npm run compile
+  
+  # Job: Build the package on Other Branches
+  check-build-package:
+    runs-on: ubuntu-latest
+    needs: compile
+    
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the package
+        run: npx @vscode/vsce package
+
+      - name: Message for branch
+        run: echo "Build the package on branch ${{ github.ref }} != main"
