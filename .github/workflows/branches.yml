@@ -10,9 +10,9 @@ on:
 jobs:
   # Job: Compile the package on Feature Branch
   compile-package:
-    uses: .github/workflows/templates/compile.yml
+    uses: ./.github/workflows/templates/compile.yml
 
   # Job: Build the package on Feature Branch
   build-package:
-    uses: .github/workflows/templates/build-feature.yml
+    uses: ./.github/workflows/templates/build-feature.yml
     needs: compile-package
