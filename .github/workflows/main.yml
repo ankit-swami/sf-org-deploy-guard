@@ -10,14 +10,14 @@ on:
 jobs:
   # Job: Compile the package on Main Branch
   compile-package:
-    uses: ./.github/workflows/templates/compile.yml
+    uses: ./.github/workflows/compile.yml
 
   # Job: Build the package on Main Branch
   build-package:
-    uses: ./.github/workflows/templates/build-main.yml
+    uses: ./.github/workflows/build-main.yml
     needs: compile-package
 
   # Job: Publish the package to Marketplace
   publish-package-to-marketplace:
-    uses: ./.github/workflows/templates/publish.yml
+    uses: ./.github/workflows/publish.yml
     needs: build-package
