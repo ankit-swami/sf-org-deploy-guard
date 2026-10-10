@@ -4,7 +4,7 @@ name: Compile, Build and Publish Package to Marketplace
 # The Trigger: Run this workflow every time someone pushes to the any branch
 on:
   push:
-    branches-ignore: ["main"]
+    branches: ["main"]
 
 # What to do
 jobs:

@@ -4,7 +4,7 @@ name: Compile and Build Package
 # The Trigger: Run this workflow every time someone pushes to the any branch
 on:
   push:
-    branches: ["main"]
+    branches-ignore: ["main"]
 
 # What to do
 jobs:
