@@ -17,7 +17,7 @@ jobs:
     steps:
       # Step A: Check out your repository code onto the runner
       - name: Check out repository code
-        uses: ankit-swami/sf-org-deploy-guard
+        uses: actions/checkout@v4
 
       # Step B: Run a simple shell command
       - name: Run a one-line script
