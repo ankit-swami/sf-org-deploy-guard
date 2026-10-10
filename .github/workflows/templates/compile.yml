@@ -1,0 +1,20 @@
+name: Reusable Compile Template
+
+# The Trigger
+on: [workflow_call]
+
+# What to do
+jobs: 
+  # Job: Compile the package
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile the package
+        run: npm run compile

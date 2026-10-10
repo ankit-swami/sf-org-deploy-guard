@@ -1,0 +1,52 @@
+name: Reusable Publish Template
+
+# The Trigger
+on: [workflow_call]
+
+# What to do
+jobs:
+  # Job: Publish the package to VS Marketplace
+  publish-package-to-vs-marketplace:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Download the artifact uploaded by the build-job
+      - name: Download Build Artifact
+        uses: actions/download-artifact@latest
+        with:
+          name: build-artifact
+
+      - name: Verify the artifact
+        run: ls *.vsix || (echo "No VSIX file found" && exit 1)
+
+      - name: Publish the package to VS Marketplace
+        run: echo "Publishing the package to VS Marketplace"
+
+  # Job: Publish the package to Open VSX Marketplace
+  publish-package-to-open-vsx-marketplace:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Download the artifact uploaded by the build-job
+      - name: Download Build Artifact
+        uses: actions/download-artifact@latest
+        with:
+          name: build-artifact
+
+      - name: Verify the artifact
+        run: ls *.vsix || (echo "No VSIX file found" && exit 1)
+
+      - name: Publish the package to Open VSX Marketplace
+        run: echo "Publishing the package to Open VSX Marketplace"
