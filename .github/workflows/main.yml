@@ -5,7 +5,7 @@ name: GitHub Actions Test
 on:
   push:
     branches:
-      - '*'
+      - '**'
 
 # 2. What to do
 jobs:
