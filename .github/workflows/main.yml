@@ -8,33 +8,32 @@ on:
       - '**'
 
 # What to do
-jobs:
-  # First job: Say hello test job
-  say-hello-job:
-    # The Runner: Use the latest Ubuntu virtual machine
-    runs-on: ubuntu-latest
-
-    # The Steps: The actual actions to execute
-    steps:
-      # Step A: Check out your repository code onto the runner
-      - name: Check out repository code
-        uses: actions/checkout@v6
-
-      # Step B: Run a simple shell command
-      - name: Run a one-line script
-        run: echo "Hello, world! Your first GitHub Action is working."
-    
-  # Second job: compile the package
-  compile-package:
+jobs: 
+  # Job: Compile the package
+  compile:
     runs-on: ubuntu-latest
 
     steps:
-      # Step A: Check out your repository code onto the runner
       - name: Check out repository code
         uses: actions/checkout@v6
 
-      # - name: Install dependencies
-        # run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
       - name: Compile the package
         run: npm run compile
+  
+  # Job: Build the package
+  build:
+    runs-on: ubuntu-latest
+    needs: compile
+    
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the package
+        run: npx @vscode/vsce package
