@@ -4,8 +4,7 @@ name: Compile, Build and Publish Package
 # The Trigger: Run this workflow every time someone pushes to the any branch
 on:
   push:
-    branches:
-      - '**'
+    branches: ['main']
 
 # What to do
 jobs: 
@@ -22,25 +21,6 @@ jobs:
 
       - name: Compile the package
         run: npm run compile
-  
-  # Job: Build the package on Other Branches
-  check-build-package:
-    if: github.ref != 'refs/heads/main'
-    runs-on: ubuntu-latest
-    needs: compile
-    
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v6
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build the package
-        run: npx @vscode/vsce package
-
-      - name: Message for branch
-        run: echo "Build the package on branch ${{ github.ref }} != main"
 
   # Job: Build and Publish the package on Main Branches
   build-and-publish-package:
