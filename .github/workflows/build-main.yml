@@ -1,0 +1,31 @@
+name: Reusable Build Template
+
+# The Trigger
+on: [workflow_call]
+
+# What to do
+jobs:
+  # Job: Build the package
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the package
+        run: npx @vscode/vsce package
+
+      - name: Build published message
+        run: echo "Build the package successfully"
+
+      # Upload the build artifact
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-artifact # The name of the artifact zip file
+          path: "*.vsix" # The file path we want to save
+          retention-days: 1
